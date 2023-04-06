@@ -1,5 +1,7 @@
+#include <iostream>
 #define MAX_SIZE 100
 
+using namespace std;
 class Stack {
 private:
     int top;

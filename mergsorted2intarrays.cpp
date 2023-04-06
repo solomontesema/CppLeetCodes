@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -8,7 +9,7 @@ class Solution {
     Question: Merge Sorted Array: Given two sorted integer arrays nums1 and 
     nums2, merge nums2 into nums1 as one sorted array.
     
-    We first check if m or n are less than or equal to 0, as before. 
+    We first check if m or n are less than or equal to 0.
     If either of these conditions is true, we simply return without doing anything.
     
     We then check if m is greater than the size of nums1. If it is, we resize 
@@ -48,6 +49,20 @@ public:
             nums1[k--] = nums2[j--];
         }
     }
+
+    void mergeSorted(vector<int>& nums1, vector<int>& nums2){
+        size_t m = nums1.size();
+        size_t n = nums2.size();
+        if (m==0 || n==0) return;
+        if (m<=n) return;
+        vector<int> temp;
+
+        temp.reserve(m + n);
+        copy(nums1.begin(), nums1.end(), back_inserter(temp));
+        copy(nums2.begin(), nums2.end(), back_inserter(temp));
+        sort(temp.begin(), temp.end());
+        copy(temp.begin(), temp.begin() + m, nums1.begin());
+    }
 };
 
 int main() {
@@ -69,6 +84,18 @@ int main() {
     }
     cout << "]" << endl;
 
+    nums1 = {1,2,3,0,0,0};
+    nums2 = {2,5,6};
+
+    solution.mergeSorted(nums1, nums2);
+    cout << "Merged array: [";
+    for (int i = 0; i < nums1.size(); i++) {
+        cout << nums1[i];
+        if (i < nums1.size() - 1) {
+            cout << ",";
+        }
+    }
+    cout << "]" << endl;
     return 0;
 }
 
